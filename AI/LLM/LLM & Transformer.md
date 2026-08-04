@@ -193,7 +193,7 @@ Key/Value 来自 Encoder（原始输入）
 ### 流程
 
 完整推理（一步步拆解）
-##### 第 0 步（只执行 1 次，全程不再重复）
+#### 第 0 步（只执行 1 次，全程不再重复）
 源文本：`我爱苹果`
 1. 分词 tokenize → embedding + pos 编码
 2. **完整跑一遍全部 Encoder 层**
@@ -201,7 +201,7 @@ Key/Value 来自 Encoder（原始输入）
 
 > ⭐重点：不管后面要生成多少个单词，Encoder 只运算一次，memory 固定不变。
 
-##### 开始循环解码（自回归循环，N 轮）
+#### 开始循环解码（自回归循环，N 轮）
 Decoder 的输入 = shifted right 序列，初始状态：**仅起始符[bos]
 
 #### 第一轮解码
@@ -233,7 +233,7 @@ Decoder 输入序列：`[<bos>, I]`
 <u><center>Transformer工作原理</center></u>
 
 
-#### Multi-Head Attention 多头注意力
+### Multi-Head Attention 多头注意力
 它允许模型同时关注来自不同位置的信息。
 通过分割原始的输入向量到多个头(head)，**每个头都能独立地学习不同的注意力权重**，从而增强模型对输入序列中不同部分的关注能力。
 
@@ -241,15 +241,15 @@ Decoder 输入序列：`[<bos>, I]`
 <u><center>Multi-Head Attention(多头注意力)</center></u>
 
 
-##### 输入线性变换:
+#### 输入线性变换:
 对于输入的Query(查询)、Key(键)和Value(值)向量，首先通过线性变换将它们映射到不同的子空间。这些线性变换的参数是模型需要学习的。
-##### **分割多头:**
+#### **分割多头:**
 经过线性变换后，Query、Key和Value向量被分割成多个头。每个头都会独立地进行注意力计算。
-##### **缩放点积注意力:**
+#### **缩放点积注意力:**
 在每个头内部，使用缩放点积注意力来计算Query和Key之间的注意力分数。这个分数决定了在生成输出时，模型应该关注Value向量的部分。
-##### **注意力权重应用:**
+#### **注意力权重应用:**
 将计算出的注意力权重应用于Value向量，得到加权的中间输出。这个过程可以理解为根据注意力权重对输入信息进行筛选和聚焦。
-##### 拼接和线性变换:
+#### 拼接和线性变换:
 将所有头的加权输出拼接在一起，然后通过一个线性变换得到最终的Multi-Head Attention输出。
 
 > [!NOTE] 简化概括
@@ -270,7 +270,7 @@ Decoder 输入序列：`[<bos>, I]`
 一句话概括：
 将文本向量分出多组独立通道，每组通道单独计算词语之间关联，捕捉不同类型语义信息，最后合并全部通道的信息，让模型能同时多角度捕捉文本内部的联系。
 
-#### Scaled Dot-Product Attention 缩放点积注意力
+### Scaled Dot-Product Attention 缩放点积注意力
 是Transformer模型中多头注意力机制的一个关键组成部分
 
 ![](../assets/Scaled%20Dot-Product%20Attention.png)
@@ -324,7 +324,7 @@ Decoder 输入序列：`[<bos>, I]`
 |      BERT      |  Encoder-only   |              双向无掩码              |  MLM 完形填空   | 自然语言理解（分类、抽取） |
 |      GPT       |  Decoder-only   |            单向掩码自注意力             | 预测下一个 token |  文本生成（对话、续写）  |
 | 原始 Transformer | Encoder+Decoder | 双向 Encoder + 掩码 Decoder + 交叉注意力 | 源文本→目标文本翻译  |     机器翻译      |
-#### BERT架构-Encoder-Only
+### BERT架构-Encoder-Only
 Bidirectional Encoder Representations from Transformers 
 基于 Transformer 的双向编码器表征模型（Google 2018）
 
@@ -337,7 +337,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 
 > 注意：这不是原版 BERT，是**CBERT（条件 BERT，用于文本数据增强）**，把原版 BERT 的`Segment Embedding`替换成了`Label Embedding`，用来融入分类标签信息。
 
-##### 架构
+#### 架构
 **输入层**
 - **Token Embeddings**：将单词或子词转换为固定维度的向量。
 - **Segment Embeddings**：用于区分句子对中的不同句子。
@@ -352,7 +352,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 - <font color="#c00000">MLM输出层</font>（**掩码语言模型**‌ Masked Language Model）：用于预测被掩码(masked)的单词。在训练阶段，模型会随机遮盖输入序列中的部分单词，并尝试根据上下文预测这些单词。
 - **NSP输出层**（Next Sentence Prediction）：用于判断两个句子是否为连续的句子对。在训练阶段，模型会接收成对的句子作为输入，并尝试预测第二个句子是否是第个句子的后续句子。
 
-##### 输出范式-3个特殊Token
+#### 输出范式-3个特殊Token
 输入格式：
 
 `[CLS] 句子A [SEP] 句子B [SEP]`
@@ -365,11 +365,11 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 词嵌入 Token Embedding + 位置编码 Position Embedding + 分句编码 Segment Embedding
 分句编码作用：区分句子 A 和句子 B。
 
-##### 两大预训练任务（模型海量文本自学语言规则）
+#### 两大预训练任务（模型海量文本自学语言规则）
 
 预训练 = 先用海量无标签文章自学通用语言知识；之后拿到具体任务微调。
 
-###### 1）MLM 掩码语言模型（<font color="#c00000">核心，实现双向学习</font>）
+##### 1）MLM 掩码语言模型（<font color="#c00000">核心，实现双向学习</font>）
 操作：随机把文本里**15% token 做修改**
 
 - 80% → 替换成 `[MASK]`
@@ -382,7 +382,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 
 关键点：想要猜出遮挡单词，**必须同时利用左边 + 右边上下文**，**强制练成双向理解能力**。
 
-###### 2）NSP 下一句预测（原始 BERT 任务，后续很多改进模型移除）
+##### 2）NSP 下一句预测（原始 BERT 任务，后续很多改进模型移除）
 
 输入一对句子，判断第二句是不是原文紧跟的下一句话。
 
@@ -392,7 +392,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 
 > 补充：RoBERTa 等后续研究发现 NSP 收益有限，直接删掉这个任务，效果更好。
 
-##### BERT完整流程（极简链路）
+#### BERT完整流程（极简链路）
 
 原始文本 → 分词 → 构造`[CLS]、[SEP]`输入
 → 三层 Embedding 相加
@@ -400,7 +400,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 → 输出每个 token 的语义向量
 下游任务拿向量做分类、实体识别、相似度计算
 
-##### BERT Fine-Tuning 微调
+#### BERT Fine-Tuning 微调
 - 基于句子对的分类任务
 - 基于单个句子的分类任务
 - 问答任务
@@ -413,13 +413,13 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 - [读懂BERT，看这一篇就够了](https://zhuanlan.zhihu.com/p/403495863)
 - [语言模型-BERT：bert算法介绍](https://python.itcast.cn/news/20200907/13593265501.shtml)
 
-##### 核心定位
+#### 核心定位
 - **强项：语言理解任务（判别类任务）**
 	情感分析、新闻分类、实体识别 (NER)、句子相似度、问答抽取、文本匹配
 - **弱项：不能直接做文本生成**
 	BERT 没有 Decoder、没有自回归机制，天生无法像 GPT 一样逐字续写句子。
 
-##### 优缺点
+#### 优缺点
 
 **优点**
 - BERT 相较于原来的 RNN、LSTM 可以做到并发执行，同时提取词在句子中的关系特征，并且能在多个不同层次提取关系特征，进而更全面反映句子语义。
@@ -433,7 +433,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 BERT 由多层 Transformer 编码器堆叠而成，无解码器；采用双向多头自注意力，所有 token 能互相看见上下文。
 通过 MLM 掩码完形填空 + NSP 下句预测两个任务，在海量文本上预训练，学习上下文语义表征；适合各类自然语言理解任务，不原生支持文本生成。
 
-#### GPT架构-Decoder-Only
+### GPT架构-Decoder-Only
 **Generative Pre-trained Transformer（GPT）**
 基于 Transformer 架构的生成式预训练语言模型
 
@@ -443,7 +443,7 @@ GPT是一种基于Transformer的预训练语言模型，它的最大创新之处
 <u><center>GPT架构</center></u>
 
 
-##### 架构
+#### 架构
 **输入层(Input Embedding()）**
 - 将输入的单词或符号转换为固定维度的向量表示。
 - 可以包括词嵌入、位置嵌入等，以提供单词的语义信息和位置信息。
@@ -456,7 +456,7 @@ GPT是一种基于Transformer的预训练语言模型，它的最大创新之处
 - **Softmax函数**将输出向量转换为概率分布，以便进行词汇选择或生成
 下一个单词。
 
-##### 核心模块（内部单层GPT结构）
+#### 核心模块（内部单层GPT结构）
 
 单层结构只有：
 **<font color="#c00000">掩码多头自注意力（Masked Multi-Head Self-Attention） → Add&Norm → FFN → Add&Norm</font>**
@@ -468,13 +468,13 @@ GPT是一种基于Transformer的预训练语言模型，它的最大创新之处
     不存在 Encoder 输出的 Memory，不需要外部源文本。
 3. 没有 Encoder，整套架构极度精简。
 
-##### 训练目标
+#### 训练目标
 GPT 预训练任务：**自回归语言建模 LM**
 规则：根据上文，预测**下一个 token**。
 
 训练时一次性送入一长串文本，依靠掩码禁止看到未来字符，强迫模型学习从左到右语言逻辑。
 
-##### 输入格式
+#### 输入格式
 输入构成：
 Token Embedding（词向量） + 位置编码 Positional Embedding
 
@@ -482,7 +482,7 @@ Token Embedding（词向量） + 位置编码 Positional Embedding
 
 特殊 token：`<bos>`开始符、`<eos>`结束符。
 
-##### 推理生成流程（自回归循环）
+#### 推理生成流程（自回归循环）
 1. 初始输入：`[<bos>]`
 2. 送入多层 Decoder，算出下一个 token 概率，选出最高概率单词
 3. 将新 token 追加到输入序列尾部
@@ -490,7 +490,7 @@ Token Embedding（词向量） + 位置编码 Positional Embedding
 
 > 关键点：**逐一生成，不能一次性输出整段文字**
 
-##### 优缺点
+#### 优缺点
 优势：天然支持文本生成：对话、续写、文案、翻译、代码生成
 局限：单向注意力，无法同时利用左右上下文。
 
