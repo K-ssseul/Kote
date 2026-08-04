@@ -1,6 +1,14 @@
+---
+Date: 2026-08-04
+tags:
+  - Transformer
+---
+
 
 文章：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 视频：[B站：堂吉诃德拉曼查的英豪](https://www.bilibili.com/video/BV1zSDMBUE5o/?spm_id_from=333.1007.top_right_bar_window_history.content.click&vd_source=4d928eb79bcd61bc6c36121da23c338a)
+
+---
 
 # Transformer(注意力机制)
 
@@ -215,6 +223,9 @@ Decoder 输入序列：`[<bos>, I]`
 #### 第四轮解码
 输入`[<bos>, I, love, apple]` → 输出 `<eos>`终止符 → 停止生成
 
+
+---
+
 ## Transformer工作原理
 
 ![](../assets/Transformer3.png)
@@ -302,6 +313,8 @@ Decoder 输入序列：`[<bos>, I]`
 
 **一句话总结**
 用当前 token 的需求 (Q)，和全部 token 的特征标签 (K) 比对算出相似度；缩放后通过 softmax 转为权重；最后依靠权重，把全部 token 携带的真实信息 (V) 加权融合，重点吸纳相似度高的信息。
+
+---
 
 ## Transformer架构改进
 
@@ -481,6 +494,8 @@ Token Embedding（词向量） + 位置编码 Positional Embedding
 局限：单向注意力，无法同时利用左右上下文。
 
 比如句子「银行」，只能看到前文，看不到后文，纯理解任务理论上限弱于双向模型。
+
+---
 
 ## Decoder-Only发展
 18年，OpenAI指出GPT只用解码器（Decoder-Only），模型在生成时表现会更强。
