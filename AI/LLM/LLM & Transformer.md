@@ -9,75 +9,13 @@ Transformer架构的提出奠定了大模型时代基础，使基于注意力机
 ## Transformer架构
 主要由**输入部分**（输入输出嵌入和位置编码）、**多层编码层**、**多层解码层**以及**输出部分**（输出线性层和Softmax）四大部分组成。
 
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 232,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "Transformer.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Transformer架构",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 172,
-          "aspectRatio": 0.6418918918918919,
-          "fit": "contain"
-        },
-        {
-          "id": "item-1785775248335-1",
-          "type": "image",
-          "src": "Transformer2.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Transformer详解",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 439,
-          "aspectRatio": 1.890499194847021,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
-Encoder - Decoder(编码器 - 解码器)：左边是N个编码器，右边是N个解码器。**<font color="#c00000">Transformer中的N为6。</font>**
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 235,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "Decoder-encoder.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Encoder-Decoder",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 1.5347432024169185,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+![](../assets/Transformer2.png)
+<center><u>Transformer详解</u></center>
 
+Encoder - Decoder(编码器 - 解码器)：左边是N个编码器，右边是N个解码器。**<font color="#c00000">Transformer中的N为6。</font>**
+
+![](../assets/Decoder-encoder.png)
+<center><u>Encoder-Decoder</u></center>
 ### 输入层
 #### Input Embedding · 输入词嵌入
 把文字单词 / 字，转换成计算机能看懂的数字向量。
@@ -109,34 +47,9 @@ Transformer 没有循环结构，**不知道文字先后顺序**。
 每个子层后都有一个**规范化层-“层归一化”（Norm）** 和一个**残差连接（Add）**
 
 **输出：会生成一份固定不变的<font color="#c00000">Memery矩阵</font>缓存并传输到解码层**
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 332,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "encoder.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Encoder",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 1.0835616438356164,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
 
+![](../assets/encoder.png)
+<u><center>Encoder</center></u>
 #### Multi-Head Encoder Self-Attention 多头编码自注意力
 同一篇文本内部，每个字互相看，寻找相互关联。
 
@@ -207,33 +120,9 @@ token「她」通过自注意力，高分关联「小美」，模型理解指代
 2、第二个子层是一个多头注意力子层（编码器到解码器）
 3、第三个子层是一个前馈全连接子层
 4、每个子层后都接有一个规范化层和一个残差连接
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 303,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "decoder.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Decoder",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 1.1898907103825136,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+
+![](../assets/decoder.png)
+<u><center>Decoder</center></u>
 
 #### Masked Multi-Head Decoder Self-Attention 带掩码的多头解码自注意力
 **生成文字时，禁止看到未来还没生成的字。**
@@ -321,64 +210,15 @@ Decoder 输入序列：`[<bos>, I]`
 输入`[<bos>, I, love, apple]` → 输出 `<eos>`终止符 → 停止生成
 
 ## Transformer工作原理
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 242,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "Transformer3.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Transformer工作原理",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 420,
-          "aspectRatio": 1.7343234323432344,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
 
+![](../assets/Transformer3.png)
+<u><center>Transformer工作原理</center></u>
 #### Multi-Head Attention 多头注意力
 它允许模型同时关注来自不同位置的信息。
 通过分割原始的输入向量到多个头(head)，**每个头都能独立地学习不同的注意力权重**，从而增强模型对输入序列中不同部分的关注能力。
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 460,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "Multi-Head.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Multi-Head Attention(多头注意力)",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 0.7822878228782287,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+
+![336](../assets/Multi-Head.png)
+<u><center>Multi-Head Attention(多头注意力)</center></u>
 ##### 输入线性变换:
 对于输入的Query(查询)、Key(键)和Value(值)向量，首先通过线性变换将它们映射到不同的子空间。这些线性变换的参数是模型需要学习的。
 ##### **分割多头:**
@@ -410,33 +250,9 @@ Decoder 输入序列：`[<bos>, I]`
 
 #### Scaled Dot-Product Attention 缩放点积注意力
 是Transformer模型中多头注意力机制的一个关键组成部分
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 192,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "Scaled Dot-Product Attention.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "Scaled Dot-Product Attention",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 1.8708551483420592,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+
+![](../assets/Scaled%20Dot-Product%20Attention.png)
+<u><center>Scaled Dot-Product Attention</center></u>
 **Query、Key和Value矩阵**
 - **Query矩阵(Q)**:表示当前的关注点或信息需求，用于与Key矩阵进行匹配。
 - **Key矩阵(K)**:包含输入序列中各个位置的标识信息，用于被Query矩阵查询匹配。
@@ -486,35 +302,11 @@ Decoder 输入序列：`[<bos>, I]`
 Bidirectional Encoder Representations from Transformers 
 基于 Transformer 的双向编码器表征模型（Google 2018）
 
-BERT是一种基于Transformer的预训练语言模型，它的最大创新之处在于**引入了双向Transformer编码器**，这使得模型**可以同时考虑输入序列的前后上下文信息。**<font color="#c00000">只堆叠多层 Transformer Encoder，完全没有 Decoder！</font>**
+BERT是一种基于Transformer的预训练语言模型，它的最大创新之处在于**引入了双向Transformer编码器**，这使得模型**可以同时考虑输入序列的前后上下文信息。**<font color="#c00000">只堆叠多层 Transformer Encoder，完全没有 Decoder！</font>
 
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 351,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "BERT.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "CBERT架构",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 444,
-          "aspectRatio": 1.2635914332784184,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+
+![](../assets/BERT.png)
+<u><center>CBERT架构</center></u>
 > 注意：这不是原版 BERT，是**CBERT（条件 BERT，用于文本数据增强）**，把原版 BERT 的`Segment Embedding`替换成了`Label Embedding`，用来融入分类标签信息。
 
 ##### 架构
@@ -585,33 +377,9 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 - 基于单个句子的分类任务
 - 问答任务
 - 命名实体识别
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 319,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "BERT Fine-Tuning.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "BERT Fine-Tuning",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 360,
-          "aspectRatio": 1.129506008010681,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+![](../assets/BERT%20Fine-Tuning.png)
+<u><center>BERT Fine-Tuning</center></u>
+
 文章：
 - [读懂BERT，看这一篇就够了](https://zhuanlan.zhihu.com/p/403495863)
 - [语言模型-BERT：bert算法介绍](https://python.itcast.cn/news/20200907/13593265501.shtml)
@@ -641,34 +409,9 @@ BERT 由多层 Transformer 编码器堆叠而成，无解码器；采用双向�
 基于 Transformer 架构的生成式预训练语言模型
 
 GPT是一种基于Transformer的预训练语言模型，它的最大创新之处在于使用了**单向Transformer编码器**，这使得模型可以**更好地捕捉输入序列的上下文信息**。
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 216,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "GPT.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "GPT架构",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 507,
-          "aspectRatio": 2.3472584856396868,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
 
+![](../assets/GPT.png)
+<u><center>GPT架构</center></u>
 ##### 架构
 **输入层(Input Embedding()）**
 - 将输入的单词或符号转换为固定维度的向量表示。
@@ -725,32 +468,9 @@ Token Embedding（词向量） + 位置编码 Positional Embedding
 ## Decoder-Only发展
 18年，OpenAI指出GPT只用解码器（Decoder-Only），模型在生成时表现会更强。
 
-```visual-media-layout
-{
-  "version": 1,
-  "rows": [
-    {
-      "id": "row-1",
-      "align": "center",
-      "height": 402,
-      "items": [
-        {
-          "id": "item-1",
-          "type": "image",
-          "src": "LLM Evo-Tree.png",
-          "sourceType": "vault",
-          "alt": "",
-          "caption": "粉色：Encoder-Only；绿色：Encoder-Decoder（经典架构）；蓝色：Decoder-Only（当前更主流）",
-          "captionAlign": "center",
-          "align": "center",
-          "width": 519,
-          "aspectRatio": 1.2904368358913814,
-          "fit": "contain"
-        }
-      ]
-    }
-  ]
-}
-```
+![](../assets/LLM%20Evo-Tree.png)
+<center>*<u>粉色：Encoder-Only；绿色：Encoder-Decoder（经典架构）；蓝色：Decoder-Only（当前更主流）</u></center>*
+
+
 Decoder-Only（仅解码器）的Transformer架构变体是当下最为主流的架构。
 
