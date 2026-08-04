@@ -12,10 +12,13 @@ Transformer架构的提出奠定了大模型时代基础，使基于注意力机
 ![](../assets/Transformer2.png)
 <center><u>Transformer详解</u></center>
 
+
 Encoder - Decoder(编码器 - 解码器)：左边是N个编码器，右边是N个解码器。**<font color="#c00000">Transformer中的N为6。</font>**
 
 ![](../assets/Decoder-encoder.png)
 <center><u>Encoder-Decoder</u></center>
+
+
 ### 输入层
 #### Input Embedding · 输入词嵌入
 把文字单词 / 字，转换成计算机能看懂的数字向量。
@@ -50,6 +53,8 @@ Transformer 没有循环结构，**不知道文字先后顺序**。
 
 ![](../assets/encoder.png)
 <u><center>Encoder</center></u>
+
+
 #### Multi-Head Encoder Self-Attention 多头编码自注意力
 同一篇文本内部，每个字互相看，寻找相互关联。
 
@@ -123,6 +128,7 @@ token「她」通过自注意力，高分关联「小美」，模型理解指代
 
 ![](../assets/decoder.png)
 <u><center>Decoder</center></u>
+
 
 #### Masked Multi-Head Decoder Self-Attention 带掩码的多头解码自注意力
 **生成文字时，禁止看到未来还没生成的字。**
@@ -213,12 +219,16 @@ Decoder 输入序列：`[<bos>, I]`
 
 ![](../assets/Transformer3.png)
 <u><center>Transformer工作原理</center></u>
+
+
 #### Multi-Head Attention 多头注意力
 它允许模型同时关注来自不同位置的信息。
 通过分割原始的输入向量到多个头(head)，**每个头都能独立地学习不同的注意力权重**，从而增强模型对输入序列中不同部分的关注能力。
 
 ![336](../assets/Multi-Head.png)
 <u><center>Multi-Head Attention(多头注意力)</center></u>
+
+
 ##### 输入线性变换:
 对于输入的Query(查询)、Key(键)和Value(值)向量，首先通过线性变换将它们映射到不同的子空间。这些线性变换的参数是模型需要学习的。
 ##### **分割多头:**
@@ -253,6 +263,8 @@ Decoder 输入序列：`[<bos>, I]`
 
 ![](../assets/Scaled%20Dot-Product%20Attention.png)
 <u><center>Scaled Dot-Product Attention</center></u>
+
+
 **Query、Key和Value矩阵**
 - **Query矩阵(Q)**:表示当前的关注点或信息需求，用于与Key矩阵进行匹配。
 - **Key矩阵(K)**:包含输入序列中各个位置的标识信息，用于被Query矩阵查询匹配。
@@ -307,6 +319,8 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 
 ![](../assets/BERT.png)
 <u><center>CBERT架构</center></u>
+
+
 > 注意：这不是原版 BERT，是**CBERT（条件 BERT，用于文本数据增强）**，把原版 BERT 的`Segment Embedding`替换成了`Label Embedding`，用来融入分类标签信息。
 
 ##### 架构
@@ -380,6 +394,7 @@ BERT是一种基于Transformer的预训练语言模型，它的最大创新之�
 ![](../assets/BERT%20Fine-Tuning.png)
 <u><center>BERT Fine-Tuning</center></u>
 
+
 文章：
 - [读懂BERT，看这一篇就够了](https://zhuanlan.zhihu.com/p/403495863)
 - [语言模型-BERT：bert算法介绍](https://python.itcast.cn/news/20200907/13593265501.shtml)
@@ -412,6 +427,8 @@ GPT是一种基于Transformer的预训练语言模型，它的最大创新之处
 
 ![](../assets/GPT.png)
 <u><center>GPT架构</center></u>
+
+
 ##### 架构
 **输入层(Input Embedding()）**
 - 将输入的单词或符号转换为固定维度的向量表示。
@@ -469,7 +486,9 @@ Token Embedding（词向量） + 位置编码 Positional Embedding
 18年，OpenAI指出GPT只用解码器（Decoder-Only），模型在生成时表现会更强。
 
 ![](../assets/LLM%20Evo-Tree.png)
-<center>*<u>粉色：Encoder-Only；绿色：Encoder-Decoder（经典架构）；蓝色：Decoder-Only（当前更主流）</u></center>*
+<center><u>粉色：Encoder-Only；绿色：Encoder-Decoder（经典架构）；蓝色：Decoder-Only（当前更主流）</u></center>
+
+
 
 
 Decoder-Only（仅解码器）的Transformer架构变体是当下最为主流的架构。
